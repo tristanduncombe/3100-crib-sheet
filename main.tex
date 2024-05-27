@@ -4,7 +4,7 @@
 \usepackage{ifthen}
 \usepackage[landscape]{geometry}
 \usepackage{hyperref}
-
+\usepackage{amsmath}
 % To make this come out properly in landscape mode, do one of the following
 % 1.
 %  pdflatex latexsheet.tex
@@ -63,6 +63,7 @@
                                 {1ex plus .2ex}%
                                 {\normalfont\small\bfseries}}
 \makeatother
+\newcommand{\imp}{\Rightarrow}
 
 % Define BibTeX command
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -109,18 +110,30 @@ The confirmed format of the exam is:
 
 This section will be removed before the exam
 \section{Question 1}
+Some useful rules for weakest preconditions are:
+
 \begin{tabular}{@{}ll@{}}
-\verb!book!    & Default is two-sided. \\
-\verb!report!  & No \verb!\part! divisions. \\
-\verb!article! & No \verb!\part! or \verb!\chapter! divisions. \\
-\verb!letter!  & Letter (?). \\
-\verb!slides!  & Large sans-serif font.
+\verb! (A.6)! & $ A \land (A \lor B) \equiv A \equiv A \lor (A \land B)$ \\
+\verb! (A.7)! & $ A \land (B \lor C) \equiv (A \land B) \lor (A \land C)$ \\
+\verb! (A.8)! & $ A \lor (B \land C) \equiv (A \lor B) \land (A \lor C)$ \\
+\verb! (A.18)! & $ \neg (A \land B) \equiv \neg A \lor \neg B$ \\
+\verb! (A.19)! & $ \neg (A \lor B) \equiv \neg A \land \neg B$ \\
+\verb! (A.20)! & $ A \lor (\neg A \land B) \equiv A \lor B$ \\
+\verb! (A.21)! & $ A \land (\neg A \lor B) \equiv A \land B$ \\
+\verb! (A.22)! & $ A \Rightarrow B \equiv \neg A \lor B$ \\
+\verb! (A.24)! & $ A \Rightarrow B \equiv \neg(A \land \neg B)$ \\
+\verb! (A.25)! & $ \neg(A \Rightarrow B) \equiv A \land \neg B$ \\
+\verb! (A.26)! & $ A \Rightarrow B \equiv \neg B \Rightarrow \neg A$ \\
+\verb! (A.33)! & $ C \imp (A \land B) \equiv (C \imp A) \land (C \imp B)$ \\
+\verb! (A.34)! & $ (A \lor B) \imp C \equiv (A \imp C) \land (B \imp C)$ \\
+\verb! (A.35)! & $ C \imp (A \lor B) \equiv (C \imp A) \lor (C \imp B)$ \\
+\verb! (A.36)! & $ (A \land B) \imp C \equiv (A \imp C) \lor (B \imp C)$ \\
+\verb! (A.37)! & $ A \imp (B \imp C) \equiv (A \land B) \imp C \equiv B \imp (A \imp C)$ \\
+\verb! (A.38)! & $ (A \imp B) \land (\neg A \imp C) \equiv (A \land B) \lor (\neg A \land C)$ \\
+\verb! (A.56)! & $ (\forall x \text{ s.t. } x = E \imp A) \equiv A[x \backslash E] \equiv (\exists x \text{ s.t. } x = E \land A)$ \\
 \end{tabular}
 
-Used at the very beginning of a document:
-\verb!\documentclass{!\textit{class}\verb!}!.  Use
-\verb!\begin{document}! to start contents and \verb!\end{document}! to
-end the document.
+
 
 
 \subsection{Common \texttt{documentclass} options}
