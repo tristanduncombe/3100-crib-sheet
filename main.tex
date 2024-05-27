@@ -5,6 +5,7 @@
 \usepackage[landscape]{geometry}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{multicol}
 % To make this come out properly in landscape mode, do one of the following
 % 1.
 %  pdflatex latexsheet.tex
@@ -110,29 +111,159 @@ The confirmed format of the exam is:
 
 This section will be removed before the exam
 \section{Question 1}
-Some useful rules for weakest preconditions are:
+\subsection{Predicate Logic}
 
 \begin{tabular}{@{}ll@{}}
-\verb! (A.6)! & $ A \land (A \lor B) \equiv A \equiv A \lor (A \land B)$ \\
-\verb! (A.7)! & $ A \land (B \lor C) \equiv (A \land B) \lor (A \land C)$ \\
-\verb! (A.8)! & $ A \lor (B \land C) \equiv (A \lor B) \land (A \lor C)$ \\
-\verb! (A.18)! & $ \neg (A \land B) \equiv \neg A \lor \neg B$ \\
-\verb! (A.19)! & $ \neg (A \lor B) \equiv \neg A \land \neg B$ \\
-\verb! (A.20)! & $ A \lor (\neg A \land B) \equiv A \lor B$ \\
-\verb! (A.21)! & $ A \land (\neg A \lor B) \equiv A \land B$ \\
-\verb! (A.22)! & $ A \Rightarrow B \equiv \neg A \lor B$ \\
-\verb! (A.24)! & $ A \Rightarrow B \equiv \neg(A \land \neg B)$ \\
-\verb! (A.25)! & $ \neg(A \Rightarrow B) \equiv A \land \neg B$ \\
-\verb! (A.26)! & $ A \Rightarrow B \equiv \neg B \Rightarrow \neg A$ \\
-\verb! (A.33)! & $ C \imp (A \land B) \equiv (C \imp A) \land (C \imp B)$ \\
-\verb! (A.34)! & $ (A \lor B) \imp C \equiv (A \imp C) \land (B \imp C)$ \\
-\verb! (A.35)! & $ C \imp (A \lor B) \equiv (C \imp A) \lor (C \imp B)$ \\
-\verb! (A.36)! & $ (A \land B) \imp C \equiv (A \imp C) \lor (B \imp C)$ \\
-\verb! (A.37)! & $ A \imp (B \imp C) \equiv (A \land B) \imp C \equiv B \imp (A \imp C)$ \\
-\verb! (A.38)! & $ (A \imp B) \land (\neg A \imp C) \equiv (A \land B) \lor (\neg A \land C)$ \\
-\verb! (A.56)! & $ (\forall x \text{ s.t. } x = E \imp A) \equiv A[x \backslash E] \equiv (\exists x \text{ s.t. } x = E \land A)$ \\
+$ A \land (A \lor B) \equiv A \equiv A \lor (A \land B)$ & \verb! (A.6)! \\
+$ A \land (B \lor C) \equiv (A \land B) \lor (A \land C)$ & \verb! (A.7)! \\
+$ A \lor (B \land C) \equiv (A \lor B) \land (A \lor C)$ & \verb! (A.8)! \\
+$ \neg (A \land B) \equiv \neg A \lor \neg B$ & \verb! (A.18)! \\
+$ \neg (A \lor B) \equiv \neg A \land \neg B$ & \verb! (A.19)! \\
+$ A \lor (\neg A \land B) \equiv A \lor B$ & \verb! (A.20)! \\
+$ A \land (\neg A \lor B) \equiv A \land B$ & \verb! (A.21)! \\
+$ A \Rightarrow B \equiv \neg A \lor B$ & \verb! (A.22)! \\
+$ A \Rightarrow B \equiv \neg(A \land \neg B)$ & \verb! (A.24)! \\
+$ \neg(A \Rightarrow B) \equiv A \land \neg B$ & \verb! (A.25)! \\
+$ A \Rightarrow B \equiv \neg B \Rightarrow \neg A$ & \verb! (A.26)! \\
+$ C \imp (A \land B) \equiv (C \imp A) \land (C \imp B)$ & \verb! (A.33)! \\
+$ (A \lor B) \imp C \equiv (A \imp C) \land (B \imp C)$ & \verb! (A.34)! \\
+$ C \imp (A \lor B) \equiv (C \imp A) \lor (C \imp B)$ & \verb! (A.35)! \\
+$ (A \land B) \imp C \equiv (A \imp C) \lor (B \imp C)$ & \verb! (A.36)! \\
+$ A \imp (B \imp C) \equiv (A \land B) \imp C \equiv B \imp (A \imp C)$ & \verb! (A.37)! \\
+$ (A \imp B) \land (\neg A \imp C) \equiv (A \land B) \lor (\neg A \land C)$ & \verb! (A.38)! \\
+$ (\forall x \text{ s.t. } x = E \imp A) \equiv A[x \backslash E] \equiv (\exists x \text{ s.t. } x = E \land A)$ & \verb! (A.56)! \\
+$ \forall x :: A \land B = (\forall x :: A) \land (\forall x :: B)$ & \verb! (A.65)! \\
+$ \forall x :: A = A \text{ provided } x \text{ not free in } A$ & \verb! (A.74)! \\
 \end{tabular}
 
+\subsection{Rules to know}
+
+\subsection{Basic Function} 
+\begin{verbatim}
+method MyMethod(x: int) returns (y: int)
+    requires x == 10
+    ensures y >= 25
+{
+    {x == 10}
+    {x + 3 + 12 == 25}
+    var a := x + 3;
+    {a + 12 == 25}
+    var b := 12;
+    {a + b == 25}
+    y := a + b;
+    {y >= 25}
+}
+
+\end{verbatim}
+
+
+\subsection{Loops} 
+\begin{multicols}{2}
+\begin{verbatim}
+{J}
+while B
+        invariant J
+{
+        {B && J}
+        ... 
+        {J}
+}
+{J && !B}
+\end{verbatim}
+
+\columnbreak
+\begin{tiny}
+\begin{verbatim}
+{y >= 4 && z >= x}
+while z < 0
+        invariant y >= 4 && z >= x
+{
+        {z < 0 && y >= 4 && z >= x}
+        {y >= 4 && z + y >= x}
+        z := z + y;
+        {y >= 4 && z >= x}
+}
+{z >= 0 && y >= 4 && z >= x}
+\end{verbatim}
+\end{tiny}
+\end{multicols}
+
+\subsection{Arrays} 
+\begin{multicols}{2}
+\begin{verbatim}
+var a := new string[20];
+# Type of a is array<string>.
+var m := new bool[3, 10];
+# Type of m is array2<bool>.
+
+idk what else to put here
+\end{verbatim}
+
+\columnbreak
+\begin{tiny}
+\begin{verbatim}
+method LinearSearch<T>(a: array<T>, P: T -> bool)
+returns (n: int)
+ensures 0 <= n <= a.Length
+ensures n == a.Length || P(a[n])
+ensures n == a.Length ==>
+forall i :: 0 <= i < a.Length ==> !P(a[i])
+{
+n := 0;
+while n != a.Length
+        invariant 0 <= n <= a.Length
+        invariant forall i :: 0 <= i < n ==>
+                        !P(a[i])
+{ 0 <= n < a.Length &&
+(!P(a[n]) ==> (forall i :: 0 <= i < n ==>
+                        !P(a[i])) 
+                                && !P(a[n])) }
+{ (P(a[n]) ==> 0 <= n <= a.Length &&
+(n == a.Length || P(a[n])) &&
+(n == a.Length ==>
+forall i :: 0 <= i < a.Length ==> !P(a[i]))) &&
+(!P(a[n]) ==> (forall i :: 0 <= i < n ==> 
+                        !P(a[i])) && !P(a[n])) }
+if (P(a[n])) {
+        return;
+}
+{ (forall i :: 0 <= i < n ==> !P(a[i])) (A.56)
+&& (forall i :: i == n ==> !P(a[i])) } (A.65)
+{ forall i :: (0 <= i < n ==> !P(a[i])) &&
+                        (i == n ==>
+                        !P(a[i])) } (A.34)
+{ forall i :: 0 <= i < n || i == n ==> !P(a[i])}
+{ forall i :: 0 <= i < n + 1 ==> !P(a[i]) }
+n := n + 1;
+{ forall i :: 0 <= i < n ==> !P(a[i]) }
+\end{verbatim}
+\end{tiny}
+\end{multicols}
+
+\subsection{Methods} 
+\begin{multicols}{2}
+\begin{verbatim}
+wp(t := M(E), Q )
+  = P[x \backslash E]
+    &&  forall y' ::
+      R[x,y \backslash E, y'] 
+        ==> Q[t \backslash y']
+\end{verbatim}
+\columnbreak
+\begin{scriptsize}
+\begin{verbatim}
+method Triple(x: int) returns (y: int)
+requires x >= 0
+ensures y == 3*x {
+        { u == 15}
+        { u + 3 >= 0 && 3*(u + 3) == 54 } (A.56)
+        { u + 3 >= 0 && forall y' :: y' == 3*(u + 3) ==> y' == 54 }
+        t := Triple(u + 3);
+        { t == 54 }
+}
+\end{verbatim}
+\end{scriptsize}
+\end{multicols}
 
 
 
