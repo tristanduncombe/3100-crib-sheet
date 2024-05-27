@@ -39,6 +39,13 @@ _pdf/
 # Ignore PDF files
 main.pdf
 
+Q1.pdf 
+Q2.pdf
+Q3.pdf
+Q4.pdf
+Q5.pdf
+
+*.synctex(busy)
 # Ignore luabridge
 main.luabridge.*
 
