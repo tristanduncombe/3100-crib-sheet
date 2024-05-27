@@ -16,10 +16,10 @@ jobs:
                   root_file: main.tex
 
             - name: Rename PDF
-              run: mv main.pdf journal.pdf
+              run: mv main.pdf cribsheet.pdf
 
             - name: Upload PDF
               uses: actions/upload-artifact@v2
               with:
                   name: PDF
-                  path: journal.pdf
+                  path: cribsheet.pdf
