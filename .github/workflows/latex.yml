@@ -12,6 +12,7 @@ jobs:
             - name: Compile LaTeX document
               uses: xu-cheng/latex-action@v2
               with:
+                  args: -shell-escape
                   root_file: main.tex
 
             - name: Rename PDF
