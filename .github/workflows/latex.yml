@@ -23,3 +23,13 @@ jobs:
               with:
                   name: PDF
                   path: cribsheet.pdf
+
+            - name: Commit and push PDF
+              run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git add -f cribsheet.pdf
+                  git commit -m "Add generated PDF" -a
+                  git push origin ${GITHUB_REF#refs/heads/}
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
