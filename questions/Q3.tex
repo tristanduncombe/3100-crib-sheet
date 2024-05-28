@@ -1,60 +1,40 @@
 \section{Question 3}
+\subsection{Termination Metrics}
+Any set of values which have a \textit{well-founded} order can be used as a termination metric.
 
-\subsection{Mutally recusive functions}
+An order $\succ$ is well-founded when
+\begin{itemize}
+    \item $\succ$ is irreflexive: a $\succ$ a never holds
+    \item $\succ$ is transitive:\\
+        \tab a $\succ$ b \&\& b $\succ$ c $\implies$ a $\succ$ c
+    \item there is no infinite descending chain\\
+        \tab $\text{a}_1 \succ \text{a}_2  \succ \text{a}_3  \succ \dots$
+\end{itemize}
 
+We write X decreases to x as $X \succ x$.
+
+For integers, $X \succ x$ when X > x \&\& X >= 0. \\
+For booleans, $X \succ x$ when X \&\& !x.
+
+A termination metric for a recursive function is a metric that can be proven to decrease every iteration.
+
+E.g. for the function;
 \begin{verbatim}
-method StudyPlan(n:nat)
-    requires n <= 40
-    decreases 40 - n
-{
-    if n == 4 { //done }
-    else { Learn(n, RequireStudyTime(n));}
-}
+    function F(x: int): int 
+    { 
+        if x < 10 then x else F(x – 1)
+    }
 \end{verbatim}
-prefix rule
-$\texttt{Learn(n, RequiredStudyTime(n))} \imp 40 - n \succ 40-n, \texttt{RequiredStudyTime(n)}$
-$\texttt{and }  40-n \geq 0$
-$40 - n \succ 40 - n, RequiredStudyTime(n)$
-\newline
-\newline
-(Decreases Clause for Study Plan) reduces to (Decreases Clause for Learn with Subbed Vales) and the precondition of StudyPlan is held (n <= 40)
+the termination metric would be x since $x \succ x - 1$.
 
-\begin{verbatim}
-method Learn(n: nat, h: nat) 
-    requires n < 40
-    decreases 40 - n, h
-{
-    if h == 0 { StudyPlan(n + 1); }
-    else { Learn(n, h - 1); }
-}
-\end{verbatim}
+\subsubsection{Lexicographic tuples}
+A lexicographic order is a component-wise comparison wehre earlier components are more significant.
 
-$\texttt{Study(n + 1)} \imp 40 - n, h \succ 40-(n+1) \texttt{and } 40 - n \geq 0 \texttt{and } h \geq 0$
-$\texttt{Learn(n, h -1)} \imp 40 -n, h \succ 40 -n, h -1$
+$\{\text{a}_0, \text{a}_1, \text{a}_2, \dots, \text{a}_n\} \succ \{\text{b}_0, \text{b}_2, \text{b}_3, \dots, \text{b}_n\}$ if and only if\\
+$\text{a}_0 \succ \text{b}_0\ ||\ (\text{a}_0 == \text{b}_0$ \&\& $\text{a}_1 \succ \text{b}_1)\ ||$\\
+$\tab (\text{a}_0 == \text{b}_0$ \&\& $\text{a}_1 == \text{b}_1$ \&\&\\
+$\tab \tab \text{a}_2 \succ \text{b}_2)\ || \dots\ ||$\\
+$\tab (\text{a}_0 == \text{b}_0$ \&\& $\text{a}_1 == \text{b}_1$ \&\& $\dots$ \&\&\\
+$\tab \tab \text{a}_{n-1} == \text{b}_{n-1}$ \&\& $\text{a}_n \succ \text{b}_n)$
 
-\begin{verbatim}
-method function1(params)
-    requires precondition
-    decreases decreases_clause
-{
-    if n == 0 { //done }
-    else { function2(new_param1, new_param2);}
-}
-\end{verbatim}
-
-$\texttt{function1(new\_param1)} \imp \texttt{decreases\_clause} \succ \texttt{decreases\_clause}$
-$\texttt{and }  \texttt{precondition} holds$
-$\texttt{precondition} \succ \texttt{decreases\_clause}$
-
-\begin{verbatim}
-method function2(param1, param2) 
-    requires precondition
-    decreases decreases_clause
-{
-    if h == 0 { function1(new_param1); }
-    else { function2(new_param1, new_param2); }
-}
-\end{verbatim}
-
-$\texttt{Study(n + 1)} \imp 40 - n, h \succ 40-(n+1) \texttt{and } 40 - n \geq 0 \texttt{and } h \geq 0$
-$\texttt{Learn(n, h -1)} \imp 40 -n, h \succ 40 -n, h -1$
+A lexicographic ordering allows tuples to be used as termination metrics. 
