@@ -3,6 +3,7 @@
 \subsection{Predicate Logic}
 
 \begin{tabular}{@{}ll@{}}
+\fontsize{5pt}{6pt}\selectfont
 $ A \land (A \lor B) \equiv A \equiv A \lor (A \land B)$ & \verb! (A.6)! \\
 $ A \land (B \lor C) \equiv (A \land B) \lor (A \land C)$ & \verb! (A.7)! \\
 $ A \lor (B \land C) \equiv (A \lor B) \land (A \lor C)$ & \verb! (A.8)! \\
@@ -18,9 +19,12 @@ $ C \imp (A \land B) \equiv (C \imp A) \land (C \imp B)$ & \verb! (A.33)! \\
 $ (A \lor B) \imp C \equiv (A \imp C) \land (B \imp C)$ & \verb! (A.34)! \\
 $ C \imp (A \lor B) \equiv (C \imp A) \lor (C \imp B)$ & \verb! (A.35)! \\
 $ (A \land B) \imp C \equiv (A \imp C) \lor (B \imp C)$ & \verb! (A.36)! \\
-$ A \imp (B \imp C) \equiv (A \land B) \imp C \equiv B \imp (A \imp C)$ & \verb! (A.37)! \\
-$ (A \imp B) \land (\neg A \imp C) \equiv (A \land B) \lor (\neg A \land C)$ & \verb! (A.38)! \\
-$ (\forall x \text{ s.t. } x = E \imp A) \equiv A[x \backslash E] \equiv (\exists x \text{ s.t. } x = E \land A)$ & \verb! (A.56)! \\
+$ A \imp (B \imp C) \equiv (A \land B) \imp C \equiv$ & \verb! (A.37)! \\
+$ B \imp (A \imp C)$ & \\
+$ (A \imp B) \land (\neg A \imp C) \equiv$ & \verb! (A.38)! \\
+$ (A \land B) \lor (\neg A \land C)$ & \\
+$ (\forall x \text{ s.t. } x = E \imp A) \equiv A[x \backslash E] \equiv $ & \verb! (A.56)! \\
+$ (\exists x \text{ s.t. } x = E \land A)$ & \\
 $ \forall x :: A \land B = (\forall x :: A) \land (\forall x :: B)$ & \verb! (A.65)! \\
 $ \forall x :: A = A \text{ provided } x \text{ not free in } A$ & \verb! (A.74)! \\
 \end{tabular}
@@ -47,7 +51,6 @@ method MyMethod(x: int) returns (y: int)
 
 
 \subsection{Loops} 
-\begin{multicols}{2}
 \begin{verbatim}
 {J}
 while B
@@ -60,8 +63,6 @@ while B
 {J && !B}
 \end{verbatim}
 
-\columnbreak
-\begin{tiny}
 \begin{verbatim}
 {y >= 4 && z >= x}
 while z < 0
@@ -74,23 +75,15 @@ while z < 0
 }
 {z >= 0 && y >= 4 && z >= x}
 \end{verbatim}
-\end{tiny}
-\end{multicols}
 
 \subsection{Arrays} 
-\begin{multicols}{2}
-\begin{tiny}
 \begin{verbatim}
 var a := new string[20];
 # Type of a is array<string>
 var m := new bool[3, 10];
 # Type of m is array2<bool>
 
-idk what else to put here
 \end{verbatim}
-\end{tiny}
-\columnbreak
-\begin{tiny}
 \begin{verbatim}
 method LinearSearch<T>(a: array<T>, P: T -> bool)
 returns (n: int)
@@ -127,43 +120,38 @@ if (P(a[n])) {
 n := n + 1;
 { forall i :: 0 <= i < n ==> !P(a[i]) }
 \end{verbatim}
-\end{tiny}
-\end{multicols}
 
 \subsection{Methods} 
-\begin{multicols}{2}
 \begin{verbatim}
 wp(t := M(E), Q )
-  = P[x \backslash E]
+  = P[x\E]
     &&  forall y' ::
-      R[x,y \backslash E, y'] 
-        ==> Q[t \backslash y']
+      R[x,y\E, y'] 
+        ==> Q[t\y']
 \end{verbatim}
-\columnbreak
-\begin{tiny}
 \begin{verbatim}
+Given:
 method Triple(x: int) returns (y: int)
 requires x >= 0
-ensures y == 3*x {
-        { u == 15}
-        { u + 3 >= 0 &&
-                3*(u + 3) == 54 } (A.56)
-        { u + 3 >= 0 &&
-                forall y' :: y' == 3*(u + 3)
-                        ==> y' == 54 }
-        t := Triple(u + 3);
-        { t == 54 }
-}
+ensures y == 3*x {}
+
+
+{ u == 15}
+{ u + 3 >= 0 &&
+        3*(u + 3) == 54 } (A.56)
+{ u + 3 >= 0 &&
+        forall y' :: y' == 3*(u + 3)
+                ==> y' == 54 }
+t := Triple(u + 3);
+{ t == 54 }
+
 \end{verbatim}
-\end{tiny}
-\end{multicols}
-\begin{scriptsize}
 \begin{verbatim}
 function SeqSum(s: seq<int>, lo: int, hi: int): int
 requires 0 <= lo <= hi <= |s|
 decreases hi - lo
 {
-        if lo == hi then 0 else s[lo] + SeqSum(s, lo + 1, hi)
+        if lo == hi then 0 else s[lo] +
+            SeqSum(s, lo + 1, hi)
 }
 \end{verbatim}
-\end{scriptsize}
