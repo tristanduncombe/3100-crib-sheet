@@ -31,3 +31,30 @@ method Learn(n: nat, h: nat)
 
 $\texttt{Study(n + 1)} \imp 40 - n, h \succ 40-(n+1) \texttt{and } 40 - n \geq 0 \texttt{and } h \geq 0$
 $\texttt{Learn(n, h -1)} \imp 40 -n, h \succ 40 -n, h -1$
+
+\begin{verbatim}
+method function1(params)
+    requires precondition
+    decreases decreases_clause
+{
+    if n == 0 { //done }
+    else { function2(new_param1, new_param2);}
+}
+\end{verbatim}
+
+$\texttt{function1(new\_param1)} \imp \texttt{decreases\_clause} \succ \texttt{decreases\_clause}$
+$\texttt{and }  \texttt{precondition} holds$
+$\texttt{precondition} \succ \texttt{decreases\_clause}$
+
+\begin{verbatim}
+method function2(param1, param2) 
+    requires precondition
+    decreases decreases_clause
+{
+    if h == 0 { function1(new_param1); }
+    else { function2(new_param1, new_param2); }
+}
+\end{verbatim}
+
+$\texttt{Study(n + 1)} \imp 40 - n, h \succ 40-(n+1) \texttt{and } 40 - n \geq 0 \texttt{and } h \geq 0$
+$\texttt{Learn(n, h -1)} \imp 40 -n, h \succ 40 -n, h -1$
