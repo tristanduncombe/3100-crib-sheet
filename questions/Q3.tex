@@ -11,9 +11,13 @@ method StudyPlan(n:nat)
     else { Learn(n, RequireStudyTime(n));}
 }
 \end{verbatim}
-
-$Learn(n, RequiredStudyTime(n)) \imp 40 - n \succ 40-n, RequiredStudyTime(n)$
-$and  40-n \geq 0$
+prefix rule
+$\texttt{Learn(n, RequiredStudyTime(n))} \imp 40 - n \succ 40-n, \texttt{RequiredStudyTime(n)}$
+$\texttt{and }  40-n \geq 0$
+$40 - n \succ 40 - n, RequiredStudyTime(n)$
+\newline
+\newline
+(Decreases Clause for Study Plan) reduces to (Decreases Clause for Learn with Subbed Vales) and the precondition of StudyPlan is held (n <= 40)
 
 \begin{verbatim}
 method Learn(n: nat, h: nat) 
@@ -25,3 +29,5 @@ method Learn(n: nat, h: nat)
 }
 \end{verbatim}
 
+$\texttt{Study(n + 1)} \imp 40 - n, h \succ 40-(n+1) \texttt{and } 40 - n \geq 0 \texttt{and } h \geq 0$
+$\texttt{Learn(n, h -1)} \imp 40 -n, h \succ 40 -n, h -1$
