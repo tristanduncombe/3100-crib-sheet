@@ -38,3 +38,27 @@ $\tab (\text{a}_0 == \text{b}_0$ \&\& $\text{a}_1 == \text{b}_1$ \&\& $\dots$ \&
 $\tab \tab \text{a}_{n-1} == \text{b}_{n-1}$ \&\& $\text{a}_n \succ \text{b}_n)$
 
 A lexicographic ordering allows tuples to be used as termination metrics. 
+
+\subsubsection{Mutually Exclusive Functions}
+Tuples can be used to provide termination metrics for mutually recursive functions since you can provide multiple values that the functions may reduce on.
+
+E.g. for the following methods;
+\begin{verbatim}
+    method F(i: nat) returns (r: nat) { 
+        if i <= 2 { r := 1; } 
+        else {
+            var h := H(i - 2);
+            r := 1 + h; 
+        } 
+    } 
+
+    method H(i: nat) returns (r: nat) { 
+        if i == 0 { r := 0; } 
+        else { 
+            var f := F(i); 
+            var h := H(i - 1); 
+            r := f + h; 
+        } 
+    }
+\end{verbatim}
+the termination matrix would be \{i, 1\} for H and \{i, 0\} for F since the call F(i) in H will reduce on 1 $\succ$ 0. 
