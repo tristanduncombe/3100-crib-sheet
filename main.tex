@@ -6,6 +6,9 @@
 \usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{multicol}
+\usepackage{fancyvrb}
+\newcommand\userinput[1]{\textbf{#1}}
+
 % To make this come out properly in landscape mode, do one of the following
 % 1.
 %  pdflatex latexsheet.tex
@@ -62,7 +65,11 @@
 \renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
                                 {-1ex plus -.5ex minus -.2ex}%
                                 {1ex plus .2ex}%
-                                {\normalfont\small\bfseries}}
+                                {\normalfont\small\bfseries}}                   
+\newcommand{\subsubsubsection}{\@startsection{subsubsection}{4}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\footnotesize\bfseries}}
 \makeatother
 \newcommand{\imp}{\Rightarrow}
 
@@ -115,6 +122,8 @@ This section will be removed before the exam
 \input{./questions/Q1.tex}
 
 \input{./questions/Q2.tex}
+
+\input{./questions/Q4.tex}
 
 \input{./questions/Q5.tex}
 
