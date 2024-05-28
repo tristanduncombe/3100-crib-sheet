@@ -1,0 +1,27 @@
+\section{Question 3}
+
+\subsection{Mutally recusive functions}
+
+\begin{verbatim}
+method StudyPlan(n:nat)
+    requires n <= 40
+    decreases 40 - n
+{
+    if n == 4 { //done }
+    else { Learn(n, RequireStudyTime(n));}
+}
+\end{verbatim}
+
+$Learn(n, RequiredStudyTime(n)) \imp 40 - n \succ 40-n, RequiredStudyTime(n)$
+$and  40-n \geq 0$
+
+\begin{verbatim}
+method Learn(n: nat, h: nat) 
+    requires n < 40
+    decreases 40 - n, h
+{
+    if h == 0 { StudyPlan(n + 1); }
+    else { Learn(n, h - 1); }
+}
+\end{verbatim}
+
