@@ -3,34 +3,45 @@ on:
   workflow_dispatch:
 
 jobs:
-    build:
-        runs-on: ubuntu-20.04
+  build:
+    runs-on: ubuntu-20.04
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-            - name: Compile LaTeX document
-              uses: xu-cheng/latex-action@v2
-              with:
-                  latexmk_shell_escape: true
-                  root_file: main.tex
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+            latexmk_shell_escape: true
+            root_file: main.tex
 
-            - name: Rename PDF
-              run: mv main.pdf cribsheet.pdf
+      - name: Copy PDF
+        run: cp main.pdf cribsheet_print.pdf
 
-            - name: Upload PDF
-              uses: actions/upload-artifact@v2
-              with:
-                  name: PDF
-                  path: cribsheet.pdf
+      - name: Move PDF
+        run: cp main.pdf cribsheet.pdf
+      
+      - name: Install pdftk
+        run: sudo apt-get install -y pdftk
+      
+      - name: Flip second page
+        run: pdftk A=cribsheet_print.pdf cat A1 A2east output cribsheet_print.pdf
 
-            - name: Commit and push PDF
-              run: |
-                  git config --local user.email "action@github.com"
-                  git config --local user.name "GitHub Action"
-                  git add -f cribsheet.pdf
-                  git commit -m "Add generated PDF" -a
-                  git push origin ${GITHUB_REF#refs/heads/}
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload PDFs
+        uses: actions/upload-artifact@v2
+        with:
+            name: PDFs
+            path: |
+              cribsheet.pdf
+              cribsheet_print.pdf
+
+      - name: Commit and push PDFs
+        run: |
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add -f cribsheet.pdf cribsheet_print.pdf
+            git commit -m "Add generated PDFs" -a
+            git push origin ${GITHUB_REF#refs/heads/}
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
