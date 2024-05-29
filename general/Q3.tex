@@ -1,5 +1,5 @@
-\section{Question 3}
-\subsection{Termination Metrics}
+\subsection{Question 3}
+\subsubsection{Termination Metrics}
 Any set of values which have a \textit{well-founded} order can be used as a termination metric.
 
 An order $\succ$ is well-founded when
@@ -27,7 +27,7 @@ E.g. for the function;
 \end{verbatim}
 the termination metric would be x since $x \succ x - 1$.
 
-\subsubsection{Lexicographic tuples}
+\subsubsubsection{Lexicographic tuples}
 A lexicographic order is a component-wise comparison where earlier components are more significant.
 
 $\{\text{a}_0, \text{a}_1, \text{a}_2, \dots, \text{a}_n\} \succ \{\text{b}_0, \text{b}_2, \text{b}_3, \dots, \text{b}_n\}$ if and only if\\
@@ -39,7 +39,7 @@ $\tab \tab \text{a}_{n-1} == \text{b}_{n-1}$ \&\& $\text{a}_n \succ \text{b}_n)$
 
 A lexicographic ordering allows tuples to be used as termination metrics. 
 
-\subsubsection{Mutually Recursive Functions}
+\subsubsubsection{Mutually Recursive Functions}
 Tuples can be used to provide termination metrics for mutually recursive functions since you can provide multiple values that the functions may reduce on.
 
 E.g. for the following methods;

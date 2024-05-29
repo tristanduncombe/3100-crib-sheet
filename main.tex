@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{fancyvrb}
+\usepackage{enumitem}
 \newcommand\userinput[1]{\textbf{#1}}
 
 % To make this come out properly in landscape mode, do one of the following
@@ -91,8 +92,8 @@
 \begin{document}
 
 \raggedright
-\scriptsize
-\begin{multicols}{4}
+\tiny
+\begin{multicols}{5}
 
 
 % multicol parameters
@@ -107,28 +108,29 @@
      \Large{\textbf{CSSE3100 Crib Sheet}} \\
 \end{center}
 
-\section{Exam Format}
-The confirmed format of the exam is:
-\begin{tabular}{@{}ll@{}}
-\verb!Q1!    & weakest precondition reasoning. \\
-\verb!Q2!  & method specification and loop invariants. \\
-\verb!Q3! & recursion and termination metrics. \\
-\verb!Q4!  & classes and data structures. \\
-\verb!Q5!  & lemmas and functional programming
-\end{tabular}
+\input{./general/Q1.tex}
 
-This section will be removed before the exam
+\input{./general/Q2.tex}
 
-\input{./questions/Q1.tex}
+\input{./general/Q3.tex}
 
-\input{./questions/Q2.tex}
+\input{./general/Q4.tex}
 
-\input{./questions/Q3.tex}
+\input{./general/Q5.tex}
 
-\input{./questions/Q4.tex}
+\section{2023 Final Exam}
 
-\input{./questions/Q5.tex}
+\input{./2023/Q1.tex}
 
+\input{./2023/Q2.tex}
+
+\input{./2023/Q3.tex}
+
+\input{./2023/Q4.tex}
+
+\input{./2023/Q5.tex}
+
+\input{./2023/Tut10.tex}
 
 \scriptsize
 

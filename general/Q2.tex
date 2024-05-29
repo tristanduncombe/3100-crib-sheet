@@ -1,6 +1,6 @@
-\section{Question 2}
-\subsection{Loop Design Techniques}
-\subsubsection{Look in the postcondition.}
+\subsection{Question 2}
+\subsubsection{Loop Design Techniques}
+\subsubsubsection{Look in the postcondition.}
 For a postcondition A \&\& B,
 choose the invariant to be A and the guard to be !B.
 \begin{verbatim}
@@ -22,7 +22,7 @@ ensures r*r <= N && N < (r + 1)*(r + 1)
 }
 \end{verbatim}
 
-\subsubsection{Programming by wishing}
+\subsubsubsection{Programming by wishing}
 If a problem can be made simpler by having a
 precomputed quantity Q, then introduce a new
 variable q with the intention of establishing and
@@ -44,7 +44,7 @@ ensures r*r <= N < (r + 1)*(r + 1)
 }
 \end{verbatim}
 
-\subsubsection{Replace a constant by a variable}
+\subsubsubsection{Replace a constant by a variable}
 For a loop to establish a condition P(C), where C is an
 expression that is held constant throughout the loop,
 use a variable k that the loop changes until it equals C,
@@ -60,7 +60,7 @@ and invariant
     invariant forall i :: 0 <= i < n ==> m <= a[i]
 \end{verbatim}
 
-\subsubsection{What's yet to be done}.
+\subsubsubsection{What's yet to be done}.
 If you're trying to solve a problem of the form
 p == F(n), replacement of a constant by a variable
 results in a what-has-been-done invariant
@@ -75,7 +75,7 @@ invariant
 \end{verbatim}
 where @ is some kind of combination operation.
 
-\subsubsection{Use the postcondition}
+\subsubsubsection{Use the postcondition}
 To establish a postcondition Q, make Q a loop
 invariant.
 

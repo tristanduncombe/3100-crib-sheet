@@ -1,6 +1,6 @@
-\section{Question 1}
+\subsection{Question 1}
 
-\subsection{Predicate Logic}
+\subsubsection{Predicate Logic}
 
 \begin{tabular}{@{}ll@{}}
 \fontsize{5pt}{6pt}\selectfont
@@ -29,9 +29,9 @@ $ \forall x :: A \land B = (\forall x :: A) \land (\forall x :: B)$ & \verb! (A.
 $ \forall x :: A = A \text{ provided } x \text{ not free in } A$ & \verb! (A.74)! \\
 \end{tabular}
 
-\subsection{Rules to know}
+\subsubsection{Rules to know}
 
-\subsubsection{Basic Function} 
+\subsubsubsection{Basic Function} 
 \begin{verbatim}
 method MyMethod(x: int) returns (y: int)
     requires x == 10
@@ -50,7 +50,7 @@ method MyMethod(x: int) returns (y: int)
 \end{verbatim}
 
 
-\subsubsection{Loops} 
+\subsubsubsection{Loops} 
 \begin{verbatim}
 {J}
 while B
@@ -76,7 +76,7 @@ while z < 0
 {z >= 0 && y >= 4 && z >= x}
 \end{verbatim}
 
-\subsubsection{Arrays} 
+\subsubsubsection{Arrays} 
 \begin{verbatim}
 var a := new string[20];
 # Type of a is array<string>
@@ -121,7 +121,7 @@ n := n + 1;
 { forall i :: 0 <= i < n ==> !P(a[i]) }
 \end{verbatim}
 
-\subsubsection{Methods} 
+\subsubsubsection{Methods} 
 \begin{verbatim}
 wp(t := M(E), Q )
   = P[x\E]
