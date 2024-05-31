@@ -1,9 +1,8 @@
 \subsection{Question 1}
 
 \subsubsection{Predicate Logic}
-
+\setlength{\tabcolsep}{0pt} 
 \begin{tabular}{@{}ll@{}}
-\fontsize{5pt}{6pt}\selectfont
 $ A \land (A \lor B) \equiv A \equiv A \lor (A \land B)$ & \verb! (A.6)! \\
 $ A \land (B \lor C) \equiv (A \land B) \lor (A \land C)$ & \verb! (A.7)! \\
 $ A \lor (B \land C) \equiv (A \lor B) \land (A \lor C)$ & \verb! (A.8)! \\
@@ -26,7 +25,8 @@ $ (A \land B) \lor (\neg A \land C)$ & \\
 $ (\forall x \text{ s.t. } x = E \imp A) \equiv A[x \backslash E] \equiv $ & \verb! (A.56)! \\
 $ (\exists x \text{ s.t. } x = E \land A)$ & \\
 $ \forall x :: A \land B = (\forall x :: A) \land (\forall x :: B)$ & \verb! (A.65)! \\
-$ \forall x :: A = A \text{ provided } x \text{ not free in } A$ & \verb! (A.74)! \\
+$ \forall x :: A = A$ & \verb! (A.74)! \\
+$ \text{ provided } x \text{ not free in } A$ & \\
 \end{tabular}
 
 \subsubsection{Rules to know}
@@ -74,6 +74,51 @@ while z < 0
         {y >= 4 && z >= x}
 }
 {z >= 0 && y >= 4 && z >= x}
+\end{verbatim}
+
+\subsubsubsection{Arrays} 
+\begin{verbatim}
+var a := new string[20];
+# Type of a is array<string>
+var m := new bool[3, 10];
+# Type of m is array2<bool>
+
+\end{verbatim}
+\begin{verbatim}
+method LinearSearch<T>(a: array<T>, P: T -> bool)
+returns (n: int)
+ensures 0 <= n <= a.Length
+ensures n == a.Length || P(a[n])
+ensures n == a.Length ==>
+forall i :: 0 <= i < a.Length ==> !P(a[i])
+{
+n := 0;
+while n != a.Length
+        invariant 0 <= n <= a.Length
+        invariant forall i :: 0 <= i < n ==>
+                        !P(a[i])
+{ 0 <= n < a.Length &&
+(!P(a[n]) ==> (forall i :: 0 <= i < n ==>
+                        !P(a[i])) 
+                                && !P(a[n])) }
+{ (P(a[n]) ==> 0 <= n <= a.Length &&
+(n == a.Length || P(a[n])) &&
+(n == a.Length ==>
+forall i :: 0 <= i < a.Length ==> !P(a[i]))) &&
+(!P(a[n]) ==> (forall i :: 0 <= i < n ==> 
+                        !P(a[i])) && !P(a[n])) }
+if (P(a[n])) {
+        return;
+}
+{ (forall i :: 0 <= i < n ==> !P(a[i])) (A.56)
+&& (forall i :: i == n ==> !P(a[i])) } (A.65)
+{ forall i :: (0 <= i < n ==> !P(a[i])) &&
+                        (i == n ==>
+                        !P(a[i])) } (A.34)
+{ forall i :: 0 <= i < n || i == n ==> !P(a[i])}
+{ forall i :: 0 <= i < n + 1 ==> !P(a[i]) }
+n := n + 1;
+{ forall i :: 0 <= i < n ==> !P(a[i]) }
 \end{verbatim}
 
 \subsubsubsection{Methods} 
