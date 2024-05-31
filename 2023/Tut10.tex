@@ -13,7 +13,8 @@ class Node<T> {
   {
     this in Repr &&
     (next == null ==> s == [value]) &&
-    (next != null ==> next in Repr && next.Repr <= Repr && this !in next.Repr &&
+    (next != null ==> next in Rep
+      && next.Repr <= Repr && this !in next.Repr &&
     next.Valid() && s == [value] + next.s)
   }
 
@@ -27,7 +28,8 @@ class Node<T> {
   }
 
   method SetNext(n: Node<T>)
-    requires Valid() && n.Valid() && this !in n.Repr && n.Repr !! Repr
+    requires Valid() && n.Valid()
+      && this !in n.Repr && n.Repr !! Repr
     modifies Repr
     ensures Valid() && fresh(Repr - old(Repr) - n.Repr)
     ensures s == old([s[0]]) + n.s
@@ -39,8 +41,10 @@ class Node<T> {
   method GetNext() returns (n: Node?<T>)
     requires Valid()
     ensures n == null ==> |s| == 1
-    ensures n != null ==> n in Repr && n.Repr <= Repr && this !in n.Repr &&
-    n.Valid() && s == s[0] + n.s
+    ensures n != null ==> n in Repr
+      && n.Repr <= Repr
+      && this !in n.Repr
+      && n.Valid() && s == s[0] + n.s
   {
     n := next;
   }
@@ -65,7 +69,9 @@ class Stack<T> {
 {
   this in Repr &&
   (top == null ==> s == []) &&
-  (top != null ==> top in Repr && top.Repr <= Repr && this !in top.Repr &&
+  (top != null ==> top in Repr
+    && top.Repr <= Repr
+    && this !in top.Repr &&
   top.Valid() && top.s == s)
 }
 
@@ -80,7 +86,8 @@ constructor ()
 method Push(v: T)
   requires Valid()
   modifies Repr
-  ensures Valid() && fresh(Repr - old(Repr))
+  ensures Valid()
+    && fresh(Repr - old(Repr))
   ensures s == [v] + old(s)
 {
   var newNode := new Node(v);
@@ -88,19 +95,24 @@ method Push(v: T)
   newNode.SetNext(top);
   }
   top := newNode;
-  s, Repr := [v] + s, {this} + newNode.Repr;
+  s, Repr := [v] + s, {this}
+    + newNode.Repr;
 }
 
 method Pop() returns (v: T)
   requires s != []
   requires Valid()
   modifies Repr
-  ensures Valid() && fresh(Repr - old(Repr))
-  ensures v == old(s[0]) && s == old(s[1..])
+  ensures Valid()
+    && fresh(Repr - old(Repr))
+  ensures v == old(s[0]) 
+    && s == old(s[1..])
 {
   v := top.GetValue();
   top := top.GetNext();
-  s := s[1..]; // note that the removal of old(top) from Repr is not required
+  s := s[1..]; 
+  // note that the removal of 
+  // old(top) from Repr is not required
 }
 }
 \end{verbatim}
