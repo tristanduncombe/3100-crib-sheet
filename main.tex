@@ -1,4 +1,4 @@
-\documentclass[10pt,landscape]{article}
+\documentclass[a4paper]{article}
 \usepackage{multicol}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -41,7 +41,7 @@
 
 % This sets page margins to .5 inch if using letter paper, and to 1cm
 % if using A4 paper. (This probably isn't strictly necessary.)
-% If using another size paper, use default 1cm margins.
+% % If using another size paper, use default 1cm margins.
 \ifthenelse{\lengthtest { \paperwidth = 11in}}
 	{ \geometry{top=.20in,left=.20in,right=.20in,bottom=.20in} }
 	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
@@ -92,7 +92,7 @@
 \begin{document}
 
 \raggedright
-\tiny
+\fontsize{5pt}{6pt}\selectfont
 \begin{multicols}{5}
 
 
