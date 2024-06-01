@@ -73,3 +73,29 @@ Multisets are used to represent an orderless collection of elements, with repeti
         Excludes & \verb|elem !in s;|\\
         Disjoint & \verb|elem !! s;|
 \end{tabular}
+
+\subsection{Specification Keywords}
+\subsubsection{Requires}
+A requires clause stipulates a condition \verb!P! which must be true upon entry to the method.
+\subsubsection{Ensures}
+A requires clause stipulates a condition \verb!R! which must be true when exiting the method.
+\subsubsection{Modifies}
+A modifies clause is required if a method changes a value on the heap (i.e. a value in an array is changed).
+\subsubsection{Reads}
+A reads clause is required if a method reads a value on the heap (i.e. a value in an array is read).
+\subsubsection{Invariant}
+An invariant clause stipulates a condition \verb!I! which must be true at the beginning and end of a loop.
+\subsubsection{Decreases}
+A decreases clause indicates a value \verb!D! which decreases after every iteration of a loop.
+\subsubsection{Forall}
+A forall clause is used to stipulate that a condition \verb!Q! must hold forall values of a given variable.
+For example, \verb!forall i :: P[i] ==> Q[i]! requires \verb!Q[i]! to hold for all values of \verb!i! where \verb!P[i]! holds.
+\subsubsection{Exists}
+An exists clause is used to stipulate that a condition \verb!Q! must hold for at least one value of a given variable.
+For example, \verb!exists i :: P[i] ==> Q[i]! requires \verb!Q[i]! to hold for at least one value of \verb!i! where \verb!P[i]! holds.
+\subsubsection{Fresh}
+Fresh is used to indicate that a value stored on the heap must be brand new with no modifications.
+For example, \verb!fresh(x)! requires x to be a brand new value on the heap.
+\subsubsection{Old}
+Old is used to reference the value on the heap before the method began. 
+For example, \verb!old(a[i])! refers to the element at index \verb!i! at the beginning of the method.

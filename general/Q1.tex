@@ -26,29 +26,33 @@ $ (\forall x \text{ s.t. } x = E \imp A) \equiv A[x \backslash E] \equiv $ & \ve
 $ (\exists x \text{ s.t. } x = E \land A)$ & \\
 $ \forall x :: A \land B = (\forall x :: A) \land (\forall x :: B)$ & \verb! (A.65)! \\
 $ \forall x :: A = A$ & \verb! (A.74)! \\
-$ \text{ provided } x \text{ not free in } A$ & \\
+$ \tab \text{ provided } x \text{ not free in } A$ & \\
 \end{tabular}
 
-\subsubsection{Rules to know}
+\subsubsection{Weakest Precondition}
 
-\subsubsubsection{Basic Function} 
+\subsubsubsection{Assignment} 
 \begin{verbatim}
-method MyMethod(x: int) returns (y: int)
-    requires x == 10
-    ensures y >= 25
-{
-    {x == 10}
-    {x + 3 + 12 == 25}
-    var a := x + 3;
-    {a + 12 == 25}
-    var b := 12;
-    {a + b == 25}
-    y := a + b;
-    {y >= 25}
-}
-
+wp(x := E, Q) = Q[x\E]
 \end{verbatim}
 
+\subsubsubsection{Simultaneous Assignment} 
+\begin{verbatim}
+wp(x1, x2, ..., xN := E1, E2, ..., EN, Q)
+        = Q[x1, x2, ..., xN\E1, E2, ... EN]
+\end{verbatim}
+
+\subsubsubsection{Variable Introduction}
+\begin{verbatim}
+wp(var x, Q) = forall x :: Q
+\end{verbatim}
+Can be ignored when we have \verb!var x := E;! or \verb!var x; x := E;!
+
+\subsubsubsection{Condition}
+\begin{verbatim}
+wp(if B { S } else { T }, Q) =
+        (B ==> wp(S, Q)) && (!B ==> wp(T, Q))
+\end{verbatim}
 
 \subsubsubsection{Loops} 
 \begin{verbatim}
@@ -62,7 +66,7 @@ while B
 }
 {J && !B}
 \end{verbatim}
-
+E.g.
 \begin{verbatim}
 {y >= 4 && z >= x}
 while z < 0
@@ -76,14 +80,38 @@ while z < 0
 {z >= 0 && y >= 4 && z >= x}
 \end{verbatim}
 
+\subsubsubsection{Loops Proving Decreases} 
+\begin{Verbatim}[commandchars=\\\{\}, codes={\catcode`$=3\catcode`^=7}]
+\{J\}
+while B
+        invariant J
+        decreases D
+\{
+        \{B && J\}
+        ghost var d := D;
+        ... 
+        \{J && d $\succ$ D\}
+\}
+\{J && !B\}
+\end{Verbatim}
+
 \subsubsubsection{Methods} 
+For a generic method M,
 \begin{verbatim}
-wp(t := M(E), Q )
-  = P[x\E]
-    &&  forall y' ::
-      R[x,y\E, y'] 
-        ==> Q[t\y']
+method M(x: int, a: array<int>) returns (y: int) 
+        requires P
+        modifies a
+        ensures R
 \end{verbatim}
+the WP rule is:
+\begin{verbatim}
+wp(t := M(E, b), Q)  =  
+    P[x, a\E, b] && 
+    forall y', b' :: b'.Length = b. Length &&
+        R[x, y, a, old(a[i])\E, y', b', b[i]] 
+                ==> Q[t, b\y', b']
+\end{verbatim}
+For example.
 \begin{verbatim}
 Given:
 method Triple(x: int) returns (y: int)
@@ -110,3 +138,14 @@ decreases hi - lo
             SeqSum(s, lo + 1, hi)
 }
 \end{verbatim}
+
+\subsubsubsection{Lemmas}
+For a call to lemma \verb!M!, the WP rule is:
+\begin{verbatim}
+wp(M(E), Q)  =  P[x\E] && (R[x\E] ==> Q)
+\end{verbatim}
+where P is the requires class of the lemma and R is the ensures clause.
+
+\subsubsection{Old}
+In a WP proof, \verb!old(E)! can be replaced with \verb!E! 
+if there is no modifications to E above the current position in the method.
