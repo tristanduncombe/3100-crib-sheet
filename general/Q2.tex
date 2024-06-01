@@ -52,12 +52,13 @@ and make P(k) a loop invariant.
 
 For example, Min method (Week 4) had postcondition
 \begin{verbatim}
-    ensures forall i :: 0 <= i < a.Length ==>
-                                        m <= a[i]
+    ensures forall i :: 0 <= i < a.Length 
+            ==> m <= a[i]
 \end{verbatim}
 and invariant
 \begin{verbatim}
-    invariant forall i :: 0 <= i < n ==> m <= a[i]
+    invariant forall i :: 0 <= i < n 
+            ==> m <= a[i]
 \end{verbatim}
 
 \subsubsubsection{What's yet to be done}.
@@ -71,7 +72,7 @@ Alternatively, you may use a what's-yet-to-be-done
 invariant
 
 \begin{verbatim}
-    invariant p @ F(n – i) == F(n)
+    invariant p @ F(n - i) == F(n)
 \end{verbatim}
 where @ is some kind of combination operation.
 
@@ -81,9 +82,11 @@ invariant.
 
 For the Min example, to ensure the postcondiVon
 \begin{verbatim}
-ensures exists i :: 0 <= i < a.Length && m == a[i]
+ensures exists i :: 0 <= i < a.Length && 
+                                m == a[i]
 \end{verbatim}
 we used the invariant
 \begin{verbatim}
-invariant exists i :: 0 <= i < a.Length && m == a[i]
+invariant exists i :: 0 <= i < a.Length && 
+                                m == a[i]
 \end{verbatim}
