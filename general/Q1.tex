@@ -130,7 +130,8 @@ t := Triple(u + 3);
 
 \end{verbatim}
 \begin{verbatim}
-function SeqSum(s: seq<int>, lo: int, hi: int): int
+function SeqSum(s: seq<int>, lo: int, hi: int)
+                                : int
 requires 0 <= lo <= hi <= |s|
 decreases hi - lo
 {
