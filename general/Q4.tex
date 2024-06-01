@@ -64,13 +64,13 @@ For a composite objects \textbf{b0, b1} and non-composite objects and arrays \te
 \subsubsubsection{Constructor}
 For a non-composite array or object \textbf{a} and a composite object \textbf{b}.
 \begin{Verbatim}[commandchars=\\\{\}]
-    \textbf{constructor}()
-        \textbf{ensures} Valid() && \textbf{fresh}(Repr)
-    \{
-        ... \textit{(initialise concrete and abstract state)}
-        \textbf{new};
-        Repr := \{this, a, b\} + b.Repr;
-    \}
+\textbf{constructor}()
+    \textbf{ensures} Valid() && \textbf{fresh}(Repr)
+\{
+    ... \textit{(initialise concrete and abstract state)}
+    \textbf{new};
+    Repr := \{this, a, b\} + b.Repr;
+\}
 \end{Verbatim}
 
 \subsubsubsection{Functions}
